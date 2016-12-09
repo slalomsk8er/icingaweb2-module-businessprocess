@@ -10,6 +10,7 @@ class BpNode extends Node
     const OP_AND = '&';
     const OP_OR  = '|';
     const OP_NOT  = '!';
+    const OP_DEGRADED  = '<';
     protected $operator = '&';
     protected $url;
     protected $info_command;
@@ -203,6 +204,7 @@ class BpNode extends Node
             case self::OP_AND:
             case self::OP_OR:
             case self::OP_NOT:
+            case self::OP_DEGRADED:
                 return;
             default:
                 if (is_numeric($operator)) {
@@ -317,6 +319,11 @@ class BpNode extends Node
             $lastStateChange = max($lastStateChange, $child->getLastStateChange());
             $bp->endLoopDetection($this->name);
         }
+        // TODO: Implement degradded
+        if ($this->operator === self::OP_DEGRADED) {
+            var_dump($this);
+            exit;
+        }
 
         $this->setLastStateChange($lastStateChange);
 
@@ -326,6 +333,19 @@ class BpNode extends Node
                 break;
             case self::OP_NOT:
                 $sort_state = $this->invertSortingState(max($sort_states));
+                break;
+            case self::OP_DEGRADED:
+                $sort_state = max(self::ICINGA_WARNING << self::SHIFT_FLAGS, max($sort_states));
+
+                // TODO: implement degraded
+                var_dump(self::ICINGA_WARNING << self::SHIFT_FLAGS);
+                var_dump(max($sort_states));
+                var_dump($sort_state);
+                echo '++';
+                var_dump($sort_state >> self::SHIFT_FLAGS);
+                echo '--';
+                //var_dump($this->sortStateTostate($sort_state));
+
                 break;
             case self::OP_OR:
                 $sort_state = min($sort_states);
@@ -483,6 +503,9 @@ class BpNode extends Node
                 break;
             case self::OP_NOT:
                 return 'not';
+                break;
+            case self::OP_DEGRADED:
+                return 'deg';
                 break;
             default:
                 // MIN
