@@ -376,7 +376,9 @@ class EditNodeForm extends QuickForm
             }
         }
 
-        natcasesort($list);
+        if (! $this->bp->getMetadata()->isManuallyOrdered()) {
+            natcasesort($list);
+        }
         return $list;
     }
 
