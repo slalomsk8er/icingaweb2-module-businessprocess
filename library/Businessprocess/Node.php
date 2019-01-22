@@ -84,6 +84,13 @@ abstract class Node
     protected $duration;
 
     /**
+     * This node's icon
+     *
+     * @var string
+     */
+    protected $icon;
+
+    /**
      * Last state change, unix timestamp
      *
      * @var int
@@ -371,6 +378,11 @@ abstract class Node
     public function getLink()
     {
         return Html::tag('a', ['href' => '#'], $this->getAlias());
+    }
+
+    public function getIcon()
+    {
+        return Html::tag('i', ['class' => 'icon icon-' . ($this->icon ?: 'attention-circled')]);
     }
 
     public function operatorHtml()
