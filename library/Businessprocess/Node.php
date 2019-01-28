@@ -347,6 +347,14 @@ abstract class Node
         return $paths;
     }
 
+    /**
+     * @return BpConfig
+     */
+    public function getBusinessProcess()
+    {
+        return $this->bp;
+    }
+
     protected function stateToSortState($state)
     {
         if (array_key_exists($state, $this->stateToSortStateMap)) {
