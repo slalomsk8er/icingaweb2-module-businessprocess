@@ -217,13 +217,13 @@
                     $container.find('.fake-controls').remove();
                     icinga.ui.currentLayout = 'fullscreen';
                 }
-            } else if (! $container.parent('.dashboard').length) {
+            } /*else if (! $container.parent('.dashboard').length) {
                 if ($layout.hasClass('fullscreen-layout')) {
                     $layout.removeClass('fullscreen-layout');
                     icinga.ui.layoutHasBeenChanged();
                     icinga.ui.initializeControls($container);
                 }
-            }
+            }*/
         },
 
         restoreCollapsedBps: function($container) {

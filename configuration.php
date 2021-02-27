@@ -25,6 +25,10 @@ try {
                 'url' => 'businessprocess',
                 'priority' => $prio
             ));
+            $section->add('Dashboard', array(
+                'url' => 'businessprocess/dashboard',
+                'priority' => ++$prio
+            ));
 
             break;
         }
